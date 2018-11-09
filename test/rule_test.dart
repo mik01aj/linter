@@ -175,7 +175,7 @@ void main() {
     expect(lint.column, 27);
   });
 
-  test('reports lint when boolean is found in a @for condition', () {
+  test('reports lint when numbers are found in a @for condition', () {
     var lints = getLints(r'''
         @for $i from 1 through 3 {
           $a: red;
@@ -202,6 +202,30 @@ void main() {
     var lint = lints.last;
     expect(lint.line, 1);
     expect(lint.column, 14);
+  });
+
+  test('reports lint when boolean is found in a @while condition', () {
+    var lints = getLints(r'''
+        @while false {
+          $a: red;
+        }
+    ''');
+
+    expect(lints, hasLength(1));
+    expect(lints[0].line, 0);
+    expect(lints[0].column, 15);
+  });
+
+  test('reports lint when boolean is found in a @while body', () {
+    var lints = getLints(r'''
+        @while 'hello' != 'world' {
+          $a: true;
+        }
+    ''');
+
+    expect(lints, hasLength(1));
+    expect(lints[0].line, 1);
+    expect(lints[0].column, 14);
   });
 
   test('reports lint when boolean is found in a @function body', () {

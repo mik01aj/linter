@@ -263,7 +263,12 @@ abstract class Rule
 
   @override
   List<Lint> visitWhileRule(WhileRule node) {
-    throw new UnimplementedError();
+    var lint = <Lint>[];
+    lint.addAll(node.condition.accept(this));
+    for (var child in node.children) {
+      lint.addAll(child.accept(this));
+    }
+    return lint;
   }
 
   List<Lint> _visitInterpolation(Interpolation node) {
