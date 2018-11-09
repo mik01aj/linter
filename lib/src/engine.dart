@@ -9,6 +9,7 @@ import 'linter.dart';
 import 'rule.dart';
 import 'rules/no_debug.dart';
 import 'rules/no_empty_style.dart';
+import 'rules/no_condition_parens.dart';
 import 'rules/no_loud_comment.dart';
 import 'rules/non_numeric_dimension.dart';
 import 'rules/quote_map_keys.dart';
@@ -21,6 +22,7 @@ import 'rules/use_falsey_null.dart';
 final allRules = <Rule>[
   new NoDebugRule(),
   new NoEmptyStyleRule(),
+  new NoConditionParensRule(),
   new NoLoudCommentRule(),
   new NonNumericDimensionRule(),
   new QuoteMapKeysRule(),
@@ -86,7 +88,7 @@ class Engine {
 }
 
 Iterable<String> _scssFilesInDir(String path) => new Directory(path)
-      .listSync(recursive: true)
-      .where((entity) => entity is File)
-      .map((entity) => entity.path)
-      .where((path) => path.endsWith('.scss'));
+    .listSync(recursive: true)
+    .where((entity) => entity is File)
+    .map((entity) => entity.path)
+    .where((path) => path.endsWith('.scss'));
